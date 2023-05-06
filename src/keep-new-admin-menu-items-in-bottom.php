@@ -26,8 +26,8 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
 /**
@@ -35,34 +35,84 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'KEEP_NEW_ADMIN_MENU_ITEMS_IN_BOTTOM_VERSION', '1.0.0' );
+define('KEEP_NEW_ADMIN_MENU_ITEMS_IN_BOTTOM_VERSION', '1.0.0');
 
 
-function keep_new_admin_menu_items_in_bottom( $menu_ord ) {
-    if ( !$menu_ord ) return true;
 
-	$default = array(
-        'index.php', // Dashboard
-        'separator1', // First separator
-        'edit.php', // Posts
-        'upload.php', // Media
-        'link-manager.php', // Links
-        'edit-comments.php', // Comments
-        'edit.php?post_type=page', // Pages
-        'separator2', // Second separator
-        'themes.php', // Appearance
-        'plugins.php', // Plugins
-        'users.php', // Users
-        'tools.php', // Tools
-        'options-general.php', // Settings
+function keep_new_admin_menu_items_in_bottom($menu_ord)
+{
+
+    if (!$menu_ord)
+        return true;
+
+    if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+
+        $woocommerce = array(
+            'woocommerce',
+            // Woocommerce
+            'edit.php?post_type=product',
+            // Products
+            'wc-admin&path=/analytics/overview',
+            // Analytics
+            'woocommerce-marketing',
+            // Marketing
+            'separator-knamiib-woo'
+        );
+        $menu_ord = \array_diff($menu_ord, $woocommerce);
+        array_unshift($menu_ord, ...$woocommerce);
+    }
+
+    $default = array(
+        'index.php',
+        // Dashboard
+        'separator1',
+        // First separator
+        'edit.php',
+        // Posts
+        'upload.php',
+        // Media
+        'link-manager.php',
+        // Links
+        'edit-comments.php',
+        // Comments
+        'edit.php?post_type=page',
+        // Pages
+        'separator2',
+        // Second separator
+        'themes.php',
+        // Appearance
+        'plugins.php',
+        // Plugins
+        'users.php',
+        // Users
+        'tools.php',
+        // Tools
+        'options-general.php',
+        // Settings
         'separator-last', // Last separator
     );
+    $menu_ord = \array_diff($menu_ord, $default);
+    array_unshift($menu_ord, ...$default);
 
-	$menu_ord =  \array_diff($menu_ord, $default);
 
-	array_unshift($menu_ord , ...$default);
-
-	return $menu_ord;
+    return $menu_ord;
 }
-add_filter( 'custom_menu_order', 'keep_new_admin_menu_items_in_bottom', 10, 1 );
-add_filter( 'menu_order', 'keep_new_admin_menu_items_in_bottom', 10, 1 );
+add_filter('custom_menu_order', 'keep_new_admin_menu_items_in_bottom', 10, 1);
+add_filter('menu_order', 'keep_new_admin_menu_items_in_bottom', 10, 1);
+
+
+if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+    add_action('admin_menu', 'keep_new_admin_menu_items_in_bottom_set_admin_menu_separator');
+    function keep_new_admin_menu_items_in_bottom_set_admin_menu_separator()
+    {
+        $position = 9485;
+        global $menu;
+        $menu[$position] = array(
+            0 => '',
+            1 => 'read',
+            2 => 'separator-knamiib-woo',
+            3 => '',
+            4 => 'wp-menu-separator'
+        );
+    }
+}
