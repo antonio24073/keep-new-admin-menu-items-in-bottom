@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Keep new admin menu items in bottom
- * Plugin URI:        https://plit.com.br
+ * Plugin URI:        https://github.com/antonio24073/keep-new-admin-menu-items-in-bottom
  * Description:       Keep new admin menu items in bottom
  * Version:           1.0.0
  * Author:            Plit
