@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://plit.com.br
- * @since             1.0.0
+ * @since             1.1.0
  * @package           Keep_New_Admin_Menu_Items_In_Bottom
  *
  * @wordpress-plugin
  * Plugin Name:       Keep new admin menu items in bottom
  * Plugin URI:        https://github.com/antonio24073/keep-new-admin-menu-items-in-bottom
  * Description:       Keep new admin menu items in bottom
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Plit
  * Author URI:        https://plit.com.br
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('KEEP_NEW_ADMIN_MENU_ITEMS_IN_BOTTOM_VERSION', '1.0.0');
+define('KEEP_NEW_ADMIN_MENU_ITEMS_IN_BOTTOM_VERSION', '1.1.0');
 
 
 
